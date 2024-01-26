@@ -1,0 +1,5 @@
+configuration {
+	font: "JetBrainsMono 8";
+}
+@theme "onedark.rasi"
+

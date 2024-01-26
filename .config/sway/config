@@ -1,0 +1,59 @@
+include input
+include /etc/sway/config.d/*
+
+### Configurações gerais ###
+exec_always swaymsg default_border pixel 2
+font pango:JetBrainsMono 8
+titlebar_padding 1
+titlebar_border_thickness 1
+default_floating_border none
+smart_borders on
+smart_gaps on
+gaps inner 10
+exec export MOZ_ENABLE_WAYLAND=1
+
+### Inicialização ###
+exec_always wlsunset -t 3500 -s 18:00 -S 5:30
+exec_always mako
+exec_always autotiling
+exec_always gsettings set org.gnome.desktop.interface gtk-theme 'WhiteSur-Dark'
+exec_always gsettings set org.gnome.desktop.interface cursor-theme 'WhiteSur Cursors' 
+exec_always gsettings set org.gnome.desktop.interface icon-theme 'WhiteSur-Dark'
+seat seat0 xcursor_theme WhiteSur-Cursors
+
+### Configuração da paleta de cores ###
+set $0 #282C34
+set $1 #98C379
+set $2 #ABB2BF
+set $3 $0
+
+client.focused           $1        $1    $0     $1         $1
+client.focused_inactive  $3        $0    $2     $3         $3
+client.unfocused         $3        $0    $2     $3         $3
+client.background        $0
+
+bar {
+    position top
+    
+    status_command while echo $(date +'%d/%m/%Y | %R')\ \|\ $(cat /sys/class/power_supply/BAT0/capacity)%\ ; do sleep 1m; done
+	
+    colors {
+        statusline $2
+        background $0
+        focused_workspace $0 $0 $1
+        inactive_workspace $0 $0 $2
+    }
+}
+
+
+### Wallpaper ###
+output * background ~/.config/sway/wall fill 
+
+### Output configuration
+#
+# Example configuration:
+#
+#   output HDMI-A-1 resolution 1920x1080 position 1920,0
+#
+# You can get the names of your outputs by running: swaymsg -t get_outputs
+
