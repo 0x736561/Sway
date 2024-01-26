@@ -77,6 +77,12 @@ exec $idle
     # cmus
     bindsym $mod+c exec foot cmus
 
+    # Newsboat
+    bindsym $mod+n exec foot newsboat
+
+    # Neomutt
+    bindsym $mod+m exec foot neomutt
+
     # Controlar reprodução de mídia
     bindcode 172 exec playerctl play-pause
     bindcode 174 exec playerctl stop

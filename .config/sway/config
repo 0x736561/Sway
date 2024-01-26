@@ -35,7 +35,7 @@ client.background        $0
 bar {
     position top
     
-    status_command while echo $(date +'%d/%m/%Y | %R')\ \|\ $(cat /sys/class/power_supply/BAT0/capacity)%\ ; do sleep 1m; done
+    status_command while echo $(date +'󰃭 %d/%m/%Y 󰿟 󰥔 %R')\ 󰿟\  \ $(cat /sys/class/power_supply/BAT0/capacity)%\ ; do sleep 1m; done
 	
     colors {
         statusline $2
