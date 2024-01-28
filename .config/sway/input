@@ -1,8 +1,9 @@
 set $mod Mod4
+set $term foot 
 set $web librewolf
-set $editor foot vim
-set $nag swaynag --button-padding 0 --message-padding 0 --button-gap 0 --border-bottom-size 0 --text \#abb2bf --button-text \#282c34 --background \#282c34 --border-bottom \#282c34 --border \#e06c75 --button-background \#e06c75 -s 'Não.' -t warning -m
-set $lock swaylock -f -c \#282c34 --inside-color \#282c34 --line-color \#282c34 --line-wrong-color \#282c34 --line-clear-color \#282c34 --line-caps-lock-color \#282c34 --line-ver-color \#282c34 --text-color \#282c34 --text-caps-lock-color \#e5c07b --text-clear-color \#abb2bf --text-wrong-color \#abb2bf --text-ver-color \#abb2bf --ring-color \#282c34 --ring-clear-color \#282c34 --inside-clear-color \#282c34 --bs-hl-color \#e06c75 --key-hl-color \#98c379 --ring-ver-color \#98c379 --inside-ver-color \#282c34 --ring-wrong-color \#e06c75 --inside-wrong-color \#282c34 
+set $file rofi -show filebrowser
+set $nag swaynag --button-padding 0 --message-padding 0 --button-gap 0 --border-bottom-size 0 --text \#F8F8F2 --button-text \#282A36 --background \#282A36 --border-bottom \#282A36 --border \#FF5555 --button-background \#FF5555 -s 'Não.' -t warning -m
+set $lock swaylock -f -c \#282A36 --inside-color \#282A36 --line-color \#282A36 --line-wrong-color \#282A36 --line-clear-color \#282A36 --line-caps-lock-color \#282A36 --line-ver-color \#282A36 --text-color \#282A36 --text-caps-lock-color \#F1FA8C --text-clear-color \#F8F8F2 --text-wrong-color \#F8F8F2 --text-ver-color \#F8F8F2 --ring-color \#282A36 --ring-clear-color \#282A36 --inside-clear-color \#282A36 --bs-hl-color \#FF5555 --key-hl-color \#50FA7B --ring-ver-color \#50FA7B --inside-ver-color \#282A36 --ring-wrong-color \#FF5555 --inside-wrong-color \#282A36 
 set $idle swayidle -w timeout 300 '$lock' timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' before-sleep '$lock'
 exec $idle
 
@@ -28,9 +29,12 @@ exec $idle
     input 1:1:AT_Translated_Set_2_keyboard xkb_layout "br"
 
 ### Teclas de atalho
+    
+    # Bloquear tela
+    bindsym $mod+delete exec $lock
 
     # Abrir terminal
-    bindsym $mod+Return exec foot
+    bindsym $mod+Return exec $term
 
     # Abrir navegador
     bindsym $mod+w exec $web
@@ -43,7 +47,7 @@ exec $idle
     bindsym $mod+d exec rofi -show drun -show-icons
 
     # Abrir gerenciador de arquivos
-    bindsym $mod+e exec $editor
+    bindsym $mod+e exec $file
 
     # Reiniciar sway
     bindsym $mod+r reload
@@ -91,9 +95,6 @@ exec $idle
     bindcode 209 exec playerctl play-pause
     bindcode 208 exec playerctl play-pause
 
-    # Bloquear a tela
-    bindsym $mod+l exec $lock
-
     # Sair do sway
     bindsym $mod+Alt+q exec $nag 'Você realmente quer sair do sway?' -B 'Sim.' 'swaymsg exit' 
 
@@ -109,22 +110,22 @@ exec $idle
     floating_modifier $mod normal
 
     # Alterar foco entre janelas
-    bindsym $mod+Left focus left
-    bindsym $mod+Down focus down
-    bindsym $mod+Up focus up
-    bindsym $mod+Right focus right
+    bindsym $mod+h focus left
+    bindsym $mod+j focus down
+    bindsym $mod+k focus up
+    bindsym $mod+l focus right
 
     # Alterar o tamanho da janela
-    bindsym $mod+Ctrl+right resize grow width
-    bindsym $mod+Ctrl+down resize grow height
-    bindsym $mod+Ctrl+left resize shrink width
-    bindsym $mod+Ctrl+up resize shrink height
+    bindsym $mod+Ctrl+l resize grow width
+    bindsym $mod+Ctrl+j resize grow height
+    bindsym $mod+Ctrl+h resize shrink width
+    bindsym $mod+Ctrl+k resize shrink height
 
     # Movimentar janelas 
-    bindsym $mod+Alt+Left move left
-    bindsym $mod+Alt+Down move down
-    bindsym $mod+Alt+Up move up
-    bindsym $mod+Alt+Right move right
+    bindsym $mod+Alt+h move left
+    bindsym $mod+Alt+j move down
+    bindsym $mod+Alt+k move up
+    bindsym $mod+Alt+l move right
 
 
 ### Workspaces:
@@ -157,8 +158,8 @@ exec $idle
 
     bindsym $mod+t layout tabbed 
     bindsym $mod+s layout toggle split
-    bindsym $mod+k splith
-    bindsym $mod+j splitv
+#    bindsym $mod+k splith
+#    bindsym $mod+j splitv
     bindsym $mod+f fullscreen
     bindsym $mod+Tab floating toggle
     bindsym Alt+Tab focus mode_toggle
