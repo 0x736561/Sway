@@ -13,6 +13,8 @@ gaps inner 10
 exec export MOZ_ENABLE_WAYLAND=1
 
 ### Inicialização ###
+#workspace 1
+#exec foot -F tmux
 exec_always wlsunset -t 3500 -s 18:00 -S 5:30
 exec_always mako
 exec_always autotiling
@@ -20,6 +22,7 @@ exec_always gsettings set org.gnome.desktop.interface gtk-theme "Dracula"
 exec_always gsettings set org.gnome.desktop.wm.preferences theme "Dracula"
 exec_always gsettings set org.gnome.desktop.interface icon-theme "Dracula"
 seat seat0 hide_cursor 3000
+seat seat0 hide_cursor when-typing enable
 
 ### Configuração da paleta de cores ###
 set $0 #282A36

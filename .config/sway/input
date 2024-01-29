@@ -1,6 +1,6 @@
 set $mod Mod4
 set $term foot 
-set $web librewolf
+set $web qutebrowser
 set $file rofi -show filebrowser
 set $nag swaynag --button-padding 0 --message-padding 0 --button-gap 0 --border-bottom-size 0 --text \#F8F8F2 --button-text \#282A36 --background \#282A36 --border-bottom \#282A36 --border \#FF5555 --button-background \#FF5555 -s 'Não.' -t warning -m
 set $lock swaylock -f -c \#282A36 --inside-color \#282A36 --line-color \#282A36 --line-wrong-color \#282A36 --line-clear-color \#282A36 --line-caps-lock-color \#282A36 --line-ver-color \#282A36 --text-color \#282A36 --text-caps-lock-color \#F1FA8C --text-clear-color \#F8F8F2 --text-wrong-color \#F8F8F2 --text-ver-color \#F8F8F2 --ring-color \#282A36 --ring-clear-color \#282A36 --inside-clear-color \#282A36 --bs-hl-color \#FF5555 --key-hl-color \#50FA7B --ring-ver-color \#50FA7B --inside-ver-color \#282A36 --ring-wrong-color \#FF5555 --inside-wrong-color \#282A36 
@@ -30,6 +30,9 @@ exec $idle
 
 ### Teclas de atalho
     
+    # Desligar tela do notebook
+    bindsym $mod+o output "eDP-1" toggle
+
     # Bloquear tela
     bindsym $mod+delete exec $lock
 
