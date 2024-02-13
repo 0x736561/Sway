@@ -1,0 +1,7 @@
+#!/bin/sh
+sleep 2s
+mpd-mpris &
+while true; do
+    somebar -c status $(date '+%d/%m/%y - %I:%M%p'; echo "- BAT: $(cat /sys/class/power_supply/BAT0/capacity)%"; echo "- SSD: $(df -h | grep nvme0n1p2 | awk '{print $4}')")
+    sleep 1m
+done
