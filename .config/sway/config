@@ -9,20 +9,22 @@ gaps inner 10
 ### Inicialização ###
 exec_always wlsunset -t 3500 -s 18:00 -S 5:30
 exec_always mako
-exec_always source ~/.profile
-exec_always gsettings set org.gnome.desktop.interface gtk-theme "gruvbox"
+exec_always gsettings set org.gnome.desktop.interface  gtk-theme "gruvbox"
 exec_always gsettings set org.gnome.desktop.wm.preferences theme "gruvbox"
 exec_always gsettings set org.gnome.desktop.interface icon-theme "gruvbox"
+exec_always swaymsg seat seat0 hide_cursor 5000
+exec_always swaymsg seat seat0 hide_cursor when-typing enable
 exec export MOZ_ENABLE_WAYLAND=1
+exec emacs --daemon
 
 ### Configuração da paleta de cores ###
 set $0 #282828
 set $1 #98971a
 set $2 #ebdbb2
 
-client.focused           $1        $1    $0     $1         $1
-client.focused_inactive  $0        $0    $2     $0         $0
-client.unfocused         $0        $0    $2     $0         $0
+client.focused           $1  $1  $0  $1  $1
+client.focused_inactive  $0  $0  $2  $0  $0
+client.unfocused         $0  $0  $2  $0  $0
 
 bar {
     position top
@@ -32,8 +34,8 @@ bar {
     colors {
         statusline $2
         background $0
-        focused_workspace $0 $0 $1
-        inactive_workspace $0 $0 $2
+        focused_workspace  $0  $0  $1
+        inactive_workspace $0  $0  $2
     }
 }
 
@@ -41,12 +43,23 @@ bar {
 ### Wallpaper ###
 output * background ~/.local/share/wp fill 
 
-### Output configuration
-#
-# Example configuration:
-#
+### Output
+
+set $display1 "eDP-1"
+set $display2 "HDMI-A-1"
+
+workspace 1 output	  $display1
+workspace 2 output 	  $display1
+workspace 3 output 	  $display1
+workspace 4 output 	  $display1
+workspace 5 output 	  $display1
+workspace 6 output 	  $display2 $display1
+workspace 7 output 	  $display2 $display1
+workspace 8 output 	  $display2 $display1
+workspace 9 output 	  $display2 $display1
+workspace 10 output 	  $display2 $display1
+
 #   output HDMI-A-1 resolution 1920x1080 position 1920,0
-#
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
 # Teclas de atalho
@@ -54,10 +67,10 @@ output * background ~/.local/share/wp fill
 set $mod Mod4
 set $term foot 
 set $web qutebrowser
-set $file rofi -show filebrowser
+set $editor emacsclient -c -n
 set $nag swaynag --button-padding 0 --message-padding 0 --button-gap 0 --border-bottom-size 0 --text \#ebdbb2 --button-text \#282828 --background \#282828 --border-bottom \#282828 --border \#cc241d --button-background \#cc241d -s 'Não.' -t warning -m
 set $lock swaylock -f -c \#282828 --inside-color \#282828 --line-color \#282828 --line-wrong-color \#282828 --line-clear-color \#282828 --line-caps-lock-color \#282828 --line-ver-color \#282828 --text-color \#282828 --text-caps-lock-color \#d65d0e --text-clear-color \#ebdbb2 --text-wrong-color \#ebdbb2 --text-ver-color \#ebdbb2 --ring-color \#282828 --ring-clear-color \#282828 --inside-clear-color \#282828 --bs-hl-color \#cc241d --key-hl-color \#98971a --ring-ver-color \#98971a --inside-ver-color \#282828 --ring-wrong-color \#cc241d --inside-wrong-color \#282828 
-set $idle swayidle -w timeout 300 '$lock' timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' before-sleep '$lock'
+set $idle swayidle -w timeout 600 '$lock' timeout 900 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' before-sleep '$lock'
 exec $idle
 
 ### Touchpad
@@ -79,7 +92,9 @@ exec $idle
     bindgesture pinch:inward+right move right
 
 ### Teclado
-    input 1:1:AT_Translated_Set_2_keyboard xkb_layout "br"
+    input 1:1:AT_Translated_Set_2_keyboard xkb_layout "br" 
+    # usar capslock como ctrl
+    #input 1:1:AT_Translated_Set_2_keyboard xkb_options "caps:ctrl_modifier"
 
 ### Teclas de atalho
     
@@ -87,7 +102,7 @@ exec $idle
     bindsym $mod+o output "eDP-1" toggle
 
     # Bloquear tela
-    bindsym $mod+delete exec $lock
+    bindsym $mod+l exec $lock
 
     # Abrir terminal
     bindsym $mod+Return exec $term
@@ -103,7 +118,7 @@ exec $idle
     bindsym $mod+d exec rofi -show drun -show-icons
 
     # Abrir gerenciador de arquivos
-    bindsym $mod+e exec $file
+    bindsym $mod+e exec $editor
 
     # Reiniciar sway
     bindsym $mod+r reload
@@ -118,25 +133,22 @@ exec $idle
     # Mumble
     bindsym XF86AudioMicMute exec mumble rpc togglemute
 
-    # Abrir pulsemixer
-    for_window [title="mixer"] floating enable, resize set 480px 300px, move position center
-    bindsym $mod+a exec foot -T mixer pulsemixer
+    # Abrir mixer
+    for_window [title="mixer"] floating enable, resize set 500px 500px, move position center
+    bindsym $mod+a exec foot -T mixer alsamixer
 
     # Screenshot
     bindsym Print exec grim
     bindsym Shift+Print exec grim -g "$(slurp)"
 
     # Gravar tela
-    bindsym Ctrl+Shift+Print exec foot wf-recorder -a -f out.mkv
+    bindsym Ctrl+Shift+Print exec foot wf-recorder -x yuv420p -c libx264 -f  rec.mp4
 
-    # ncmpcpp
-    bindsym $mod+c exec foot ncmpcpp
+    # cmus
+    bindsym $mod+c exec foot cmus
 
     # Newsboat
     bindsym $mod+n exec foot newsboat
-
-    # Neomutt
-    bindsym $mod+m exec foot neomutt
 
     # Controlar reprodução de mídia
     bindcode 172 exec playerctl play-pause
@@ -145,13 +157,7 @@ exec $idle
     bindcode 171 exec playerctl next
 
     # Sair do sway
-    bindsym $mod+Alt+q exec $nag 'Você realmente quer sair do sway?' -B 'Sim.' 'swaymsg exit' 
-
-    # Reiniciar computador
-    bindsym $mod+Ctrl+r exec $nag 'Você realmente quer reiniciar o computador?' -B 'Sim.' 'reboot'
-
-    # Desligar computador
-    bindsym $mod+Ctrl+q exec $nag 'Você realmente quer desligar o computador?' -B 'Sim.' 'poweroff'
+    bindsym Ctrl+Alt+q exec $nag 'Você realmente quer sair do sway?' -B 'Sim.' 'swaymsg exit' 
 
 ### Movimentação
 
@@ -159,23 +165,22 @@ exec $idle
     floating_modifier $mod normal
 
     # Alterar foco entre janelas
-    bindsym $mod+h focus left
-    bindsym $mod+j focus down
-    bindsym $mod+k focus up
-    bindsym $mod+l focus right
+    bindsym $mod+left  focus left
+    bindsym $mod+down  focus down
+    bindsym $mod+up    focus up
+    bindsym $mod+right focus right
 
     # Alterar o tamanho da janela
-    bindsym $mod+Ctrl+l resize grow width
-    bindsym $mod+Ctrl+j resize grow height
-    bindsym $mod+Ctrl+h resize shrink width
-    bindsym $mod+Ctrl+k resize shrink height
+    bindsym $mod+Ctrl+right resize grow width
+    bindsym $mod+Ctrl+down  resize grow height
+    bindsym $mod+Ctrl+left  resize shrink width
+    bindsym $mod+Ctrl+up    resize shrink height
 
     # Movimentar janelas 
-    bindsym $mod+Alt+h move left
-    bindsym $mod+Alt+j move down
-    bindsym $mod+Alt+k move up
-    bindsym $mod+Alt+l move right
-
+    bindsym $mod+Alt+left  move left
+    bindsym $mod+Alt+down  move down
+    bindsym $mod+Alt+up    move up
+    bindsym $mod+Alt+right move right
 
 ### Workspaces:
 

@@ -1,0 +1,8 @@
+* Minhas configurações do [[https://github.com/swaywm/sway][sway]]
+
+Essa é uma configuração simples do compositor wayland =Sway=.
+
+Nela estão minhas teclas de atalho, tema, configuração de input,
+enfim, meu setup.
+
+[[./preview.png]]
