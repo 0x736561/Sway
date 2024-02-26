@@ -103,7 +103,7 @@ set $lock swaylock -f -c \#282828 --inside-color \#282828 --line-color \#282828 
     bindsym $mod+o output "eDP-1" toggle
 
     # Bloquear tela
-    bindsym $mod+l exec $lock
+    bindsym $mod+delete exec $lock
 
     # Fechar janela
     bindsym $mod+q kill
@@ -167,27 +167,33 @@ set $lock swaylock -f -c \#282828 --inside-color \#282828 --line-color \#282828 
     bindsym Ctrl+Alt+q exec $nag 'Você realmente quer sair do sway?' -B 'Sim.' 'swaymsg exit' 
 
 ### Movimentação
+    
+    # teclas Vim-like
+    set $left   h
+    set $down   j
+    set $up     k
+    set $right  l
 
     # Arrastar e redimensionar janelas flutuantes com o mouse
     floating_modifier $mod normal
 
     # Alterar foco entre janelas
-    bindsym $mod+left  focus left
-    bindsym $mod+down  focus down
-    bindsym $mod+up    focus up
-    bindsym $mod+right focus right
+    bindsym $mod+$left  focus left
+    bindsym $mod+$down  focus down
+    bindsym $mod+$up    focus up
+    bindsym $mod+$right focus right
 
     # Alterar o tamanho da janela
-    bindsym $mod+Ctrl+right resize grow width
-    bindsym $mod+Ctrl+down  resize grow height
-    bindsym $mod+Ctrl+left  resize shrink width
-    bindsym $mod+Ctrl+up    resize shrink height
+    bindsym $mod+Ctrl+$right resize grow width
+    bindsym $mod+Ctrl+$down  resize grow height
+    bindsym $mod+Ctrl+$left  resize shrink width
+    bindsym $mod+Ctrl+$up    resize shrink height
 
     # Movimentar janelas 
-    bindsym $mod+Alt+left  move left
-    bindsym $mod+Alt+down  move down
-    bindsym $mod+Alt+up    move up
-    bindsym $mod+Alt+right move right
+    bindsym $mod+Alt+$left  move left
+    bindsym $mod+Alt+$down  move down
+    bindsym $mod+Alt+$up    move up
+    bindsym $mod+Alt+$right move right
 
 ### Workspaces:
 
