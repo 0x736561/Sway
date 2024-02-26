@@ -1,5 +1,4 @@
 ### Configurações gerais ###
-exec_always swaymsg default_border pixel 2
 font pango:JetBrainsMono 8
 default_floating_border none
 smart_borders on
@@ -7,15 +6,19 @@ smart_gaps on
 gaps inner 10
 
 ### Inicialização ###
-exec_always wlsunset -t 3500 -s 18:00 -S 5:30
-exec_always mako
-exec_always gsettings set org.gnome.desktop.interface  gtk-theme "gruvbox"
-exec_always gsettings set org.gnome.desktop.wm.preferences theme "gruvbox"
-exec_always gsettings set org.gnome.desktop.interface icon-theme "gruvbox"
-exec_always swaymsg seat seat0 hide_cursor 5000
-exec_always swaymsg seat seat0 hide_cursor when-typing enable
-exec export MOZ_ENABLE_WAYLAND=1
-exec emacs --daemon
+set $gnome-schema org.gnome.desktop.interface
+exec_always {
+gsettings set $gnome-schema  gtk-theme "gruvbox"
+gsettings set $gnome-schema theme "gruvbox"
+gsettings set $gnome-schema icon-theme "gruvbox"
+swaymsg seat seat0 hide_cursor 5000
+swaymsg seat seat0 hide_cursor when-typing enable
+swaymsg default_border pixel 2
+}
+exec {
+wlsunset -t 3500 -s 18:00 -S 5:30
+export MOZ_ENABLE_WAYLAND=1
+}
 
 ### Configuração da paleta de cores ###
 set $0 #282828
@@ -28,9 +31,7 @@ client.unfocused         $0  $0  $2  $0  $0
 
 bar {
     position top
-    
     status_command while echo $(date +'%d/%m/%Y | %R')\ \|\ $(cat /sys/class/power_supply/BAT0/capacity)%\ ; do sleep 1; done
-	
     colors {
         statusline $2
         background $0
@@ -57,7 +58,7 @@ workspace 6 output 	  $display2 $display1
 workspace 7 output 	  $display2 $display1
 workspace 8 output 	  $display2 $display1
 workspace 9 output 	  $display2 $display1
-workspace 10 output 	  $display2 $display1
+workspace 10 output   $display2 $display1
 
 #   output HDMI-A-1 resolution 1920x1080 position 1920,0
 # You can get the names of your outputs by running: swaymsg -t get_outputs
@@ -67,11 +68,10 @@ workspace 10 output 	  $display2 $display1
 set $mod Mod4
 set $term foot 
 set $web qutebrowser
-set $editor emacsclient -c -n
+set $files thunar
 set $nag swaynag --button-padding 0 --message-padding 0 --button-gap 0 --border-bottom-size 0 --text \#ebdbb2 --button-text \#282828 --background \#282828 --border-bottom \#282828 --border \#cc241d --button-background \#cc241d -s 'Não.' -t warning -m
 set $lock swaylock -f -c \#282828 --inside-color \#282828 --line-color \#282828 --line-wrong-color \#282828 --line-clear-color \#282828 --line-caps-lock-color \#282828 --line-ver-color \#282828 --text-color \#282828 --text-caps-lock-color \#d65d0e --text-clear-color \#ebdbb2 --text-wrong-color \#ebdbb2 --text-ver-color \#ebdbb2 --ring-color \#282828 --ring-clear-color \#282828 --inside-clear-color \#282828 --bs-hl-color \#cc241d --key-hl-color \#98971a --ring-ver-color \#98971a --inside-ver-color \#282828 --ring-wrong-color \#cc241d --inside-wrong-color \#282828 
-set $idle swayidle -w timeout 600 '$lock' timeout 900 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' before-sleep '$lock'
-exec $idle
+
 
 ### Touchpad
 
@@ -118,7 +118,7 @@ exec $idle
     bindsym $mod+d exec rofi -show drun -show-icons
 
     # Abrir gerenciador de arquivos
-    bindsym $mod+e exec $editor
+    bindsym $mod+e exec $files
 
     # Reiniciar sway
     bindsym $mod+r reload
@@ -149,6 +149,9 @@ exec $idle
 
     # Newsboat
     bindsym $mod+n exec foot newsboat
+
+    # Neomutt
+    bindsym $mod+m exec foot neomutt
 
     # Controlar reprodução de mídia
     bindcode 172 exec playerctl play-pause
