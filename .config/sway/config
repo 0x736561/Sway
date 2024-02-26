@@ -18,6 +18,7 @@ swaymsg default_border pixel 2
 exec {
 wlsunset -t 3500 -s 18:00 -S 5:30
 export MOZ_ENABLE_WAYLAND=1
+swaync
 }
 
 ### Configuração da paleta de cores ###
@@ -104,14 +105,17 @@ set $lock swaylock -f -c \#282828 --inside-color \#282828 --line-color \#282828 
     # Bloquear tela
     bindsym $mod+l exec $lock
 
+    # Fechar janela
+    bindsym $mod+q kill
+
+    # Reiniciar sway
+    bindsym $mod+r reload
+
     # Abrir terminal
     bindsym $mod+Return exec $term
 
     # Abrir navegador
     bindsym $mod+w exec $web
-
-    # Fechar janela
-    bindsym $mod+q kill
 
     # menu
     bindsym $mod+p exec rofi -show run
@@ -120,8 +124,8 @@ set $lock swaylock -f -c \#282828 --inside-color \#282828 --line-color \#282828 
     # Abrir gerenciador de arquivos
     bindsym $mod+e exec $files
 
-    # Reiniciar sway
-    bindsym $mod+r reload
+    # Abrir centro de notificações
+    bindsym $mod+apostrophe exec swaync-client -op
 
     # Volume e brilho
     bindsym XF86AudioRaiseVolume exec amixer set Master 5%+
