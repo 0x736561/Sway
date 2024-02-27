@@ -1,4 +1,4 @@
-* Minhas configurações do [[https://github.com/swaywm/sway][sway]]
+* Minhas configurações do [[https://github.com/swaywm/sway][Sway]]
 
 Essa é uma configuração simples do compositor wayland =Sway=.
 
