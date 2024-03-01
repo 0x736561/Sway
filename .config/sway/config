@@ -19,6 +19,7 @@ exec {
 wlsunset -t 3500 -s 18:00 -S 5:30
 export MOZ_ENABLE_WAYLAND=1
 swaync
+/usr/libexec/pipewire-launcher
 }
 
 ### Configuração da paleta de cores ###
@@ -69,7 +70,7 @@ workspace 10 output   $display2 $display1
 set $mod Mod4
 set $term foot 
 set $web qutebrowser
-set $files thunar
+set $files foot lf
 set $nag swaynag --button-padding 0 --message-padding 0 --button-gap 0 --border-bottom-size 0 --text \#ebdbb2 --button-text \#282828 --background \#282828 --border-bottom \#282828 --border \#cc241d --button-background \#cc241d -s 'Não.' -t warning -m
 set $lock swaylock -f -c \#282828 --inside-color \#282828 --line-color \#282828 --line-wrong-color \#282828 --line-clear-color \#282828 --line-caps-lock-color \#282828 --line-ver-color \#282828 --text-color \#282828 --text-caps-lock-color \#d65d0e --text-clear-color \#ebdbb2 --text-wrong-color \#ebdbb2 --text-ver-color \#ebdbb2 --ring-color \#282828 --ring-clear-color \#282828 --inside-clear-color \#282828 --bs-hl-color \#cc241d --key-hl-color \#98971a --ring-ver-color \#98971a --inside-ver-color \#282828 --ring-wrong-color \#cc241d --inside-wrong-color \#282828 
 
@@ -138,15 +139,14 @@ set $lock swaylock -f -c \#282828 --inside-color \#282828 --line-color \#282828 
     bindsym XF86AudioMicMute exec mumble rpc togglemute
 
     # Abrir mixer
-    for_window [title="mixer"] floating enable, resize set 500px 500px, move position center
-    bindsym $mod+a exec foot -T mixer alsamixer
+    bindsym $mod+a exec pavucontrol
 
     # Screenshot
     bindsym Print exec grim
     bindsym Shift+Print exec grim -g "$(slurp)"
 
     # Gravar tela
-    bindsym Ctrl+Shift+Print exec foot wf-recorder -x yuv420p -c libx264 -f  rec.mp4
+    bindsym Ctrl+Print exec foot wf-recorder -a -x yuv420p -c libx264 -f  rec.mp4
 
     # cmus
     bindsym $mod+c exec foot cmus
